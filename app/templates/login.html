@@ -1,0 +1,863 @@
+<!doctype html>
+<html lang="en">
+<head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+
+    <title>BloodCare | Login</title>
+
+    <!-- Bootstrap -->
+    <link
+        href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.min.css"
+        rel="stylesheet"
+    >
+
+    <!-- Bootstrap Icons -->
+    <link
+        rel="stylesheet"
+        href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.11.3/font/bootstrap-icons.min.css"
+    >
+
+    <!-- Existing Project CSS -->
+    <link
+        rel="stylesheet"
+        href="{{ url_for('static', filename='css/style.css') }}"
+    >
+
+    <style>
+        /* =====================================================
+           PROFESSIONAL LOGIN PAGE
+           ===================================================== */
+
+        *{
+            box-sizing:border-box;
+        }
+
+        .login-page{
+            min-height:100vh;
+            margin:0;
+            padding:30px;
+            display:flex;
+            align-items:center;
+            justify-content:center;
+            background:
+                radial-gradient(circle at 10% 20%, #ff6b7825, transparent 30%),
+                radial-gradient(circle at 90% 80%, #8d172225, transparent 30%),
+                linear-gradient(135deg,#fff5f6,#f5f7fb);
+            transition:background .3s ease;
+        }
+
+        .login-wrapper{
+            width:min(1050px,100%);
+            min-height:650px;
+            display:grid;
+            grid-template-columns:1.05fr .95fr;
+            overflow:hidden;
+            border-radius:30px;
+            background:#fff;
+            box-shadow:0 25px 80px #5d101a25;
+        }
+
+        /* LEFT BRAND SECTION */
+
+        .login-brand{
+            position:relative;
+            padding:55px;
+            display:flex;
+            flex-direction:column;
+            justify-content:center;
+            overflow:hidden;
+            color:#fff;
+            background:
+                radial-gradient(circle at 85% 15%, #ffffff18, transparent 25%),
+                radial-gradient(circle at 15% 85%, #ffffff12, transparent 30%),
+                linear-gradient(145deg,#8d1722,#d8293a);
+        }
+
+        .brand-decoration{
+            position:absolute;
+            width:260px;
+            height:260px;
+            right:-100px;
+            top:-100px;
+            border:1px solid #ffffff20;
+            border-radius:50%;
+        }
+
+        .brand-decoration.two{
+            width:400px;
+            height:400px;
+            right:-180px;
+            top:-180px;
+        }
+
+        .brand-logo{
+            position:relative;
+            width:72px;
+            height:72px;
+            display:grid;
+            place-items:center;
+            margin-bottom:25px;
+            border-radius:20px;
+            background:#ffffff18;
+            border:1px solid #ffffff30;
+            box-shadow:0 10px 30px #0002;
+        }
+
+        .brand-logo i{
+            font-size:36px;
+            color:#fff;
+        }
+
+        .brand-label{
+            position:relative;
+            margin-bottom:10px;
+            font-size:12px;
+            font-weight:700;
+            letter-spacing:3px;
+            text-transform:uppercase;
+            color:#ffffffcc;
+        }
+
+        .login-brand h1{
+            position:relative;
+            margin:0 0 15px;
+            font-size:48px;
+            line-height:1.05;
+            font-weight:800;
+            letter-spacing:-1.5px;
+        }
+
+        .brand-description{
+            position:relative;
+            max-width:450px;
+            margin-bottom:35px;
+            color:#ffffffd9;
+            font-size:15px;
+            line-height:1.7;
+        }
+
+        .brand-features{
+            position:relative;
+            display:grid;
+            gap:14px;
+        }
+
+        .brand-feature{
+            display:flex;
+            align-items:center;
+            gap:13px;
+            color:#fff;
+            font-size:14px;
+        }
+
+        .brand-feature-icon{
+            width:38px;
+            height:38px;
+            flex-shrink:0;
+            display:grid;
+            place-items:center;
+            border-radius:11px;
+            background:#ffffff18;
+            border:1px solid #ffffff18;
+        }
+
+        .brand-feature-icon i{
+            font-size:17px;
+        }
+
+        .brand-footer{
+            position:relative;
+            margin-top:40px;
+            font-size:12px;
+            color:#ffffff99;
+        }
+
+        /* RIGHT LOGIN SECTION */
+
+        .login-form-section{
+            position:relative;
+            padding:50px 60px;
+            display:flex;
+            align-items:center;
+            justify-content:center;
+            background:#fff;
+        }
+
+        .login-form-container{
+            width:100%;
+            max-width:390px;
+        }
+
+        .mobile-logo{
+            display:none;
+        }
+
+        .welcome-label{
+            margin-bottom:8px;
+            font-size:12px;
+            font-weight:700;
+            letter-spacing:2px;
+            text-transform:uppercase;
+            color:#e63946;
+        }
+
+        .login-form-container h2{
+            margin:0;
+            font-size:32px;
+            font-weight:800;
+            color:#161a1d;
+        }
+
+        .login-subtitle{
+            margin:9px 0 30px;
+            color:#7b828a;
+            font-size:14px;
+        }
+
+        /* FORM */
+
+        .input-label{
+            display:block;
+            margin-bottom:8px;
+            font-size:13px;
+            font-weight:600;
+            color:#363b42;
+        }
+
+        .input-wrapper{
+            position:relative;
+            margin-bottom:19px;
+        }
+
+        .input-wrapper > i{
+            position:absolute;
+            left:16px;
+            top:50%;
+            z-index:2;
+            transform:translateY(-50%);
+            color:#969da5;
+            font-size:17px;
+        }
+
+        .login-input{
+            width:100%;
+            height:52px;
+            padding:0 45px;
+            border:1px solid #e0e4e8;
+            border-radius:13px;
+            outline:none;
+            background:#f8f9fa;
+            color:#20242a;
+            font-size:14px;
+            transition:border .2s ease,box-shadow .2s ease,background .2s ease;
+        }
+
+        .login-input:focus{
+            background:#fff;
+            border-color:#e63946;
+            box-shadow:0 0 0 4px #e6394612;
+        }
+
+        .password-toggle{
+            position:absolute;
+            right:13px;
+            top:50%;
+            width:34px;
+            height:34px;
+            transform:translateY(-50%);
+            display:grid;
+            place-items:center;
+            border:0;
+            border-radius:9px;
+            background:transparent;
+            color:#858c94;
+            cursor:pointer;
+        }
+
+        .password-toggle:hover{
+            background:#ffecee;
+            color:#e63946;
+        }
+
+        /* OPTIONS */
+
+        .login-options{
+            display:flex;
+            align-items:center;
+            justify-content:space-between;
+            margin:2px 0 24px;
+        }
+
+        .remember{
+            display:flex;
+            align-items:center;
+            gap:8px;
+            font-size:12px;
+            color:#727982;
+            cursor:pointer;
+        }
+
+        .remember input{
+            accent-color:#e63946;
+        }
+
+        .forgot{
+            color:#e63946;
+            font-size:12px;
+            font-weight:600;
+            text-decoration:none;
+        }
+
+        .forgot:hover{
+            color:#b91f2d;
+        }
+
+        /* SIGN IN */
+
+        .login-btn{
+            width:100%;
+            height:52px;
+            border:0;
+            border-radius:13px;
+            background:linear-gradient(135deg,#e63946,#c51f30);
+            color:#fff;
+            font-size:14px;
+            font-weight:700;
+            box-shadow:0 10px 25px #e6394630;
+            transition:transform .2s ease,box-shadow .2s ease;
+        }
+
+        .login-btn:hover{
+            color:#fff;
+            transform:translateY(-2px);
+            box-shadow:0 14px 30px #e6394640;
+        }
+
+        .login-btn i{
+            margin-left:7px;
+        }
+
+        /* DEMO */
+
+        .demo-box{
+            display:flex;
+            align-items:flex-start;
+            gap:10px;
+            margin-top:24px;
+            padding:14px;
+            border-radius:12px;
+            background:#fff6f7;
+            border:1px solid #ffe1e4;
+        }
+
+        .demo-box i{
+            margin-top:1px;
+            color:#e63946;
+        }
+
+        .demo-box strong{
+            display:block;
+            margin-bottom:2px;
+            font-size:11px;
+            color:#4a5057;
+        }
+
+        .demo-box span{
+            font-size:12px;
+            color:#777f88;
+        }
+
+        .secure-note{
+            display:flex;
+            justify-content:center;
+            align-items:center;
+            gap:6px;
+            margin-top:24px;
+            color:#9aa1a9;
+            font-size:11px;
+        }
+
+        .secure-note i{
+            color:#198754;
+        }
+
+        /* THEME BUTTON */
+
+        .login-theme{
+            position:absolute;
+            top:25px;
+            right:25px;
+            width:40px;
+            height:40px;
+            display:grid;
+            place-items:center;
+            border:1px solid #e3e6e9;
+            border-radius:11px;
+            background:#fff;
+            color:#4d555d;
+            cursor:pointer;
+            transition:.2s ease;
+        }
+
+        .login-theme:hover{
+            border-color:#e63946;
+            color:#e63946;
+        }
+
+        /* =====================================================
+           DARK MODE
+           ===================================================== */
+
+        body.dark .login-page{
+            background:
+                radial-gradient(circle at 10% 20%,#e6394615,transparent 30%),
+                radial-gradient(circle at 90% 80%,#8d172215,transparent 30%),
+                #0d1014;
+        }
+
+        body.dark .login-wrapper{
+            background:#181d23;
+            box-shadow:0 25px 80px #00000070;
+        }
+
+        body.dark .login-form-section{
+            background:#181d23;
+        }
+
+        body.dark .login-form-container h2{
+            color:#f5f7fa;
+        }
+
+        body.dark .login-subtitle{
+            color:#9da5ae;
+        }
+
+        body.dark .input-label{
+            color:#dce1e5;
+        }
+
+        body.dark .login-input{
+            background:#222830;
+            border-color:#353d46;
+            color:#f1f3f5;
+        }
+
+        body.dark .login-input:focus{
+            background:#252c34;
+            border-color:#e63946;
+        }
+
+        body.dark .demo-box{
+            background:#281b1e;
+            border-color:#43262b;
+        }
+
+        body.dark .demo-box strong{
+            color:#e7eaed;
+        }
+
+        body.dark .demo-box span{
+            color:#9da5ae;
+        }
+
+        body.dark .login-theme{
+            background:#222830;
+            border-color:#39414a;
+            color:#f1f3f5;
+        }
+
+        body.dark .remember{
+            color:#9da5ae;
+        }
+
+        body.dark .forgot{
+            color:#ff6875;
+        }
+
+        /* RESPONSIVE */
+
+        @media(max-width:850px){
+
+            .login-page{
+                padding:20px;
+            }
+
+            .login-wrapper{
+                grid-template-columns:1fr;
+                max-width:520px;
+            }
+
+            .login-brand{
+                display:none;
+            }
+
+            .login-form-section{
+                min-height:620px;
+                padding:55px 35px;
+            }
+
+            .mobile-logo{
+                width:60px;
+                height:60px;
+                display:grid;
+                place-items:center;
+                margin:0 auto 20px;
+                border-radius:17px;
+                background:#ffe7ea;
+                color:#d92b3a;
+                font-size:30px;
+            }
+
+            .login-form-container{
+                text-align:left;
+            }
+
+            .login-form-container h2,
+            .welcome-label,
+            .login-subtitle{
+                text-align:center;
+            }
+        }
+
+        @media(max-width:480px){
+
+            .login-page{
+                padding:10px;
+            }
+
+            .login-wrapper{
+                border-radius:22px;
+            }
+
+            .login-form-section{
+                padding:50px 23px;
+            }
+
+            .login-theme{
+                top:15px;
+                right:15px;
+            }
+        }
+    </style>
+</head>
+
+<body class="login-page">
+
+    <div class="login-wrapper">
+
+        <!-- =================================================
+             LEFT BRANDING
+             ================================================= -->
+
+        <section class="login-brand">
+
+            <div class="brand-decoration"></div>
+            <div class="brand-decoration two"></div>
+
+            <div class="brand-logo">
+                <i class="bi bi-droplet-fill"></i>
+            </div>
+
+            <div class="brand-label">
+                Smart Blood Operations
+            </div>
+
+            <h1>
+                Every drop<br>
+                matters.
+            </h1>
+
+            <p class="brand-description">
+                Manage blood donors, inventory and emergency
+                blood requests from one secure platform.
+            </p>
+
+            <div class="brand-features">
+
+                <div class="brand-feature">
+                    <div class="brand-feature-icon">
+                        <i class="bi bi-people-fill"></i>
+                    </div>
+                    <span>Smart donor management</span>
+                </div>
+
+                <div class="brand-feature">
+                    <div class="brand-feature-icon">
+                        <i class="bi bi-heart-pulse-fill"></i>
+                    </div>
+                    <span>Fast emergency blood requests</span>
+                </div>
+
+                <div class="brand-feature">
+                    <div class="brand-feature-icon">
+                        <i class="bi bi-box-seam-fill"></i>
+                    </div>
+                    <span>Real-time inventory management</span>
+                </div>
+
+                <div class="brand-feature">
+                    <div class="brand-feature-icon">
+                        <i class="bi bi-shield-check"></i>
+                    </div>
+                    <span>Secure and organized operations</span>
+                </div>
+
+            </div>
+
+            <div class="brand-footer">
+                © 2026 BloodCare · Smart Blood Donor Management
+            </div>
+
+        </section>
+
+
+        <!-- =================================================
+             LOGIN FORM
+             ================================================= -->
+
+        <section class="login-form-section">
+
+            <!-- Theme Button -->
+            <button
+                type="button"
+                class="login-theme"
+                id="loginTheme"
+                title="Toggle theme"
+            >
+                🌙
+            </button>
+
+            <div class="login-form-container">
+
+                <div class="mobile-logo">
+                    <i class="bi bi-droplet-fill"></i>
+                </div>
+
+                <div class="welcome-label">
+                    Welcome back
+                </div>
+
+                <h2>Sign in to BloodCare</h2>
+
+                <p class="login-subtitle">
+                    Access your blood management dashboard
+                </p>
+
+
+                <form method="post">
+
+                    <!-- CSRF -->
+                    <input
+                        type="hidden"
+                        name="csrf_token"
+                        value="{{ csrf_token() }}"
+                    >
+
+                    <!-- USERNAME -->
+                    <label class="input-label">
+                        Username
+                    </label>
+
+                    <div class="input-wrapper">
+
+                        <i class="bi bi-person"></i>
+
+                        <input
+                            class="login-input"
+                            type="text"
+                            name="username"
+                            placeholder="Enter your username"
+                            autocomplete="username"
+                            required
+                        >
+
+                    </div>
+
+
+                    <!-- PASSWORD -->
+                    <label class="input-label">
+                        Password
+                    </label>
+
+                    <div class="input-wrapper">
+
+                        <i class="bi bi-lock"></i>
+
+                        <input
+                            class="login-input"
+                            id="passwordInput"
+                            type="password"
+                            name="password"
+                            placeholder="Enter your password"
+                            autocomplete="current-password"
+                            required
+                        >
+
+                        <button
+                            type="button"
+                            class="password-toggle"
+                            id="passwordToggle"
+                            title="Show password"
+                        >
+                            <i class="bi bi-eye"></i>
+                        </button>
+
+                    </div>
+
+
+                    <!-- OPTIONS -->
+                    <div class="login-options">
+
+                        <label class="remember">
+                            <input type="checkbox">
+                            Remember me
+                        </label>
+
+                        <a href="#" class="forgot">
+                            Forgot password?
+                        </a>
+
+                    </div>
+
+
+                    <!-- LOGIN BUTTON -->
+                    <button
+                        type="submit"
+                        class="login-btn"
+                    >
+                        Sign in
+                        <i class="bi bi-arrow-right"></i>
+                    </button>
+
+                </form>
+
+
+                <!-- DEMO LOGIN -->
+                <div class="demo-box">
+
+                    <i class="bi bi-info-circle-fill"></i>
+
+                    <div>
+                        <strong>Demo Access</strong>
+                        <span>
+                            Username: admin &nbsp;•&nbsp;
+                            Password: Admin@123
+                        </span>
+                    </div>
+
+                </div>
+
+
+                <div class="secure-note">
+                    <i class="bi bi-shield-lock-fill"></i>
+                    Secure BloodCare access
+                </div>
+
+            </div>
+
+        </section>
+
+    </div>
+
+
+    <!-- =====================================================
+         LOGIN PAGE JAVASCRIPT
+         ===================================================== -->
+
+    <script>
+
+        document.addEventListener("DOMContentLoaded", function(){
+
+            /* PASSWORD SHOW / HIDE */
+
+            const passwordInput =
+                document.getElementById("passwordInput");
+
+            const passwordToggle =
+                document.getElementById("passwordToggle");
+
+            if(passwordToggle && passwordInput){
+
+                passwordToggle.addEventListener("click", function(){
+
+                    if(passwordInput.type === "password"){
+
+                        passwordInput.type = "text";
+
+                        passwordToggle.innerHTML =
+                            '<i class="bi bi-eye-slash"></i>';
+
+                        passwordToggle.title =
+                            "Hide password";
+
+                    }else{
+
+                        passwordInput.type = "password";
+
+                        passwordToggle.innerHTML =
+                            '<i class="bi bi-eye"></i>';
+
+                        passwordToggle.title =
+                            "Show password";
+                    }
+
+                });
+            }
+
+
+            /* LIGHT / DARK MODE */
+
+            const themeButton =
+                document.getElementById("loginTheme");
+
+            const savedTheme =
+                localStorage.getItem("theme");
+
+            if(savedTheme === "dark"){
+
+                document.body.classList.add("dark");
+
+                if(themeButton){
+                    themeButton.innerHTML = "☀️";
+                }
+
+            }else{
+
+                document.body.classList.remove("dark");
+
+                if(themeButton){
+                    themeButton.innerHTML = "🌙";
+                }
+            }
+
+
+            if(themeButton){
+
+                themeButton.addEventListener("click", function(){
+
+                    document.body.classList.toggle("dark");
+
+                    if(document.body.classList.contains("dark")){
+
+                        localStorage.setItem("theme","dark");
+
+                        themeButton.innerHTML = "☀️";
+
+                    }else{
+
+                        localStorage.setItem("theme","light");
+
+                        themeButton.innerHTML = "🌙";
+                    }
+
+                });
+
+            }
+
+        });
+
+    </script>
+
+</body>
+</html>
